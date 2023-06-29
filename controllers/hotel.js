@@ -3,7 +3,7 @@ const Hotel = require("../models/Hotel");
 // Create Hotel
 const createHotel = async (req, res) => {
   try {
-    const { name, type, city, address, distanceFromTranspotation, photos, title, desc, rating, cheapestPrice, featured } = req.body;
+    const { name, type, city, address, telephone, distanceFromTranspotation, photos, title, desc, rating, cheapestPrice, featured } = req.body;
 
     console.log(req.body)
     
@@ -14,7 +14,7 @@ const createHotel = async (req, res) => {
       desc: room.desc
     }))
 
-    const hotel = await Hotel.create({ name, type, city, address, distanceFromTranspotation, photos, title, desc, rating, rooms, cheapestPrice, featured });
+    const hotel = await Hotel.create({ name, type, city, address, telephone, distanceFromTranspotation, photos, title, desc, rating, rooms, cheapestPrice, featured });
     res.status(201).json({
       data: hotel,
     });
@@ -28,7 +28,7 @@ const createHotel = async (req, res) => {
 //Update Hotel
 const updateHotel = async (req, res) => {
   try {
-    const { name, type, city, address, distanceFromTranspotation, photos, title, desc, rating, cheapestPrice, featured, room } = req.body;
+    const { name, type, city, address, telephone, distanceFromTranspotation, photos, title, desc, rating, cheapestPrice, featured, room } = req.body;
     
     const { id } = req.params;
 
@@ -43,6 +43,7 @@ const updateHotel = async (req, res) => {
     hotel.type = type;
     hotel.city = city;
     hotel.address = address;
+    hotel.telephone = telephone
     hotel.distanceFromTranspotation = distanceFromTranspotation;
     hotel.photos = photos;
     hotel.title = title;
