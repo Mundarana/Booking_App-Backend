@@ -40,7 +40,11 @@ const HotelSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  distanceFromTranspotation: {
+  telephone: {
+    type: Number,
+    require: true,
+  },
+  distanceFromCityCenter: {
     type: String,
     required: true,
   },

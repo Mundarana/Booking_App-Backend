@@ -7,13 +7,16 @@ const createToken = (_id) => {
 
 // login user
 const loginUser = async (req, res) => {
+  console.log('point1')
   const { email, password } = req.body;
 
   try {
     const user = await User.login(email, password);
+    console.log('point2')
 
     //create token
     const token = createToken(user._id);
+    console.log('point3')
 
     res.status(200).json({ email, token });
   } catch (error) {
