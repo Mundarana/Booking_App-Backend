@@ -2,9 +2,8 @@ const mongoose = require("mongoose");
 
 const RoomSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
+    roomTitle: {
+      type: String, // Rooms type
     },
     price: {
       type: Number,
@@ -14,7 +13,7 @@ const RoomSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    desc: {
+    roomDesc: {
       type: String,
       required: true,
     },
@@ -25,10 +24,10 @@ const RoomSchema = new mongoose.Schema(
 
 const HotelSchema = new mongoose.Schema({
   name: {
-    type: String,
+    type: String,  //name ot the Ohner
     required: true,
   },
-  type: {
+  typeOfProperty: {
     type: String,
     required: true,
   },
@@ -52,7 +51,7 @@ const HotelSchema = new mongoose.Schema({
     type: [String],
   },
   title: {
-    type: String,
+    type: String, // name the Place
     required: true,
   },
   desc: {
@@ -68,9 +67,6 @@ const HotelSchema = new mongoose.Schema({
   cheapestPrice: {
     type: Number,
     required: true,
-  },
-  featured: {
-    type: String,
   },
 });
 

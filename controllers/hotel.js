@@ -2,23 +2,25 @@ const Hotel = require("../models/Hotel");
 
 // Create Hotel
 const createHotel = async (req, res) => {
+  console.log("req.body",req.body)
   try {
-    const { name, type, city, address, telephone, distanceFromTranspotation, photos, title, desc, rating, cheapestPrice, featured } = req.body;
+    const { name, typeOfProperty, city, address, telephone, distanceFromCityCenter, photos, title, desc, rating, cheapestPrice, featured } = req.body;
 
-    console.log(req.body)
     
     const rooms = req.body.rooms.map((room) => ({
-      title: room.title,
+      roomTitle: room.title,
       price: room.price,
       maxPeople: room.maxPeople,
-      desc: room.desc
+      roomDesc: room.desc
     }))
 
-    const hotel = await Hotel.create({ name, type, city, address, telephone, distanceFromTranspotation, photos, title, desc, rating, rooms, cheapestPrice, featured });
+    const hotel = await Hotel.create({ name, typeOfProperty, city, address, telephone, distanceFromCityCenter, photos, title, desc, rating, rooms, cheapestPrice, featured });
     res.status(201).json({
       data: hotel,
     });
+    console.log("AT THE ENDDD")
   } catch (error) {
+    console.log("ERROOOORRRRRR")
     res.status(500).json({
       error,
     });
