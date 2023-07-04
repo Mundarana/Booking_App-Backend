@@ -1,32 +1,58 @@
 const Hotel = require("../models/Hotel");
-const Photo = require("../models/Photo")
+const Photo = require("../models/Photo");
 const { trace } = require("../routes/hotel");
 
 // Create Hotel
 const createHotel = async (req, res) => {
-  console.log("req.body",req.body)
+  console.log("req.body", req.body);
   try {
-    const { name, typeOfProperty, city, address, telephone, distanceFromCityCenter, photos, title, desc, rating, cheapestPrice, featured } = req.body;
+    const {
+      name,
+      typeOfProperty,
+      city,
+      address,
+      telephone,
+      distanceFromCityCenter,
+      photos,
+      title,
+      desc,
+      rating,
+      cheapestPrice,
+      featured,
+    } = req.body;
 
-    
     const rooms = req.body.rooms.map((room) => ({
       roomTitle: room.title,
       price: room.price,
       maxPeople: room.maxPeople,
-      roomDesc: room.desc
-    }))
+      roomDesc: room.desc,
+    }));
 
-    const hotel = await Hotel.create({ name, typeOfProperty, city, address, telephone, distanceFromCityCenter, photos, title, desc, rating, rooms, cheapestPrice, featured });
+    const hotel = await Hotel.create({
+      name,
+      typeOfProperty,
+      city,
+      address,
+      telephone,
+      distanceFromCityCenter,
+      photos,
+      title,
+      desc,
+      rating,
+      rooms,
+      cheapestPrice,
+      featured,
+    });
 
-        // Call the uploadPhotos controller here, passing the hotel ID
-        await uploadPhotos(req, res, hotel._id);
-    
+    // Call the uploadPhotos controller here, passing the hotel ID
+    // await uploadPhotos(req, res, hotel._id);
+
     res.status(201).json({
       data: hotel,
     });
-    console.log("AT THE ENDDD")
+    console.log("AT THE ENDDD");
   } catch (error) {
-    console.log("ERROOOORRRRRR")
+    console.log("ERROOOORRRRRR");
     res.status(500).json({
       error,
     });
@@ -36,15 +62,29 @@ const createHotel = async (req, res) => {
 //Update Hotel
 const updateHotel = async (req, res) => {
   try {
-    const { name, type, city, address, telephone, distanceFromTranspotation, photos, title, desc, rating, cheapestPrice, featured, room } = req.body;
-    
+    const {
+      name,
+      type,
+      city,
+      address,
+      telephone,
+      distanceFromTranspotation,
+      photos,
+      title,
+      desc,
+      rating,
+      cheapestPrice,
+      featured,
+      room,
+    } = req.body;
+
     const { id } = req.params;
 
-    const hotel = await Hotel.findById(id)
+    const hotel = await Hotel.findById(id);
 
     if (!hotel) {
       return res.status(404).json({ msg: "I don't know this hotel :(" });
-    } 
+    }
 
     // const uploadPhotos = async (req. res) => {
     //   try {
@@ -68,7 +108,7 @@ const updateHotel = async (req, res) => {
     hotel.type = type;
     hotel.city = city;
     hotel.address = address;
-    hotel.telephone = telephone
+    hotel.telephone = telephone;
     hotel.distanceFromTranspotation = distanceFromTranspotation;
     hotel.photos = photos;
     hotel.title = title;
@@ -94,18 +134,17 @@ const updateHotel = async (req, res) => {
       title: room.title,
       price: room.price,
       maxPeople: room.maxPeople,
-      desc: room.desc
-    }
+      desc: room.desc,
+    };
 
-    hotel.rooms.push(newRoom)
+    hotel.rooms.push(newRoom);
 
-    const updatedHotel = await hotel.save()
+    const updatedHotel = await hotel.save();
 
     res.status(200).json({
       msg: "Hotel updated",
-      data: updatedHotel
-    })
-    
+      data: updatedHotel,
+    });
   } catch (error) {
     res.status(500).json({
       error,
@@ -115,19 +154,19 @@ const updateHotel = async (req, res) => {
 const uploadPhotos = async (req, res, hotelId) => {
   try {
     if (req.file && req.file.path) {
-      const photos = new Photo ({
+      const photos = new Photo({
         name: req.file.name,
         url: req.file.path,
-        hotel: hotelId
+        hotel: hotelId,
       });
 
       await photos.save();
-      return res.status(200).json({msg: "saved Successfully"});
+      return res.status(200).json({ msg: "saved Successfully" });
     } else {
-      return res.status(422).json({error})
+      return res.status(422).json({ error });
     }
   } catch (error) {
-    return res.status(500).json({error})
+    return res.status(500).json({ error });
   }
 };
 
@@ -140,9 +179,7 @@ const deleteOneHotel = async (req, res) => {
     if (!hotel) {
       res.status(404).json({ msg: "I don't know this hotel :(" });
     } else {
-      res
-        .status(200)
-        .json({ msg: "Hotel removed successfully", data: hotel });
+      res.status(200).json({ msg: "Hotel removed successfully", data: hotel });
     }
   } catch (error) {
     res.status(500).json({
@@ -187,4 +224,11 @@ const getAllHotels = async (req, res) => {
   }
 };
 
-module.exports ={ createHotel, updateHotel, deleteOneHotel, getOneHotel, getAllHotels, uploadPhotos };
+module.exports = {
+  createHotel,
+  updateHotel,
+  deleteOneHotel,
+  getOneHotel,
+  getAllHotels,
+  uploadPhotos,
+};
