@@ -9,11 +9,11 @@ const hotelRoute = require('./routes/hotel');
 const roomRoute = require('./routes/room');
 
 const PORT = process.env.PORT;
+app.use(cors());
 
 connectDB();
 
 // Necessary middleware
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 

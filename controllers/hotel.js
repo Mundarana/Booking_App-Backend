@@ -1,4 +1,6 @@
 const Hotel = require("../models/Hotel");
+const Photo = require("../models/Photo")
+const { trace } = require("../routes/hotel");
 
 // Create Hotel
 const createHotel = async (req, res) => {
@@ -15,6 +17,10 @@ const createHotel = async (req, res) => {
     }))
 
     const hotel = await Hotel.create({ name, typeOfProperty, city, address, telephone, distanceFromCityCenter, photos, title, desc, rating, rooms, cheapestPrice, featured });
+
+        // Call the uploadPhotos controller here, passing the hotel ID
+        await uploadPhotos(req, res, hotel._id);
+    
     res.status(201).json({
       data: hotel,
     });
@@ -39,6 +45,23 @@ const updateHotel = async (req, res) => {
     if (!hotel) {
       return res.status(404).json({ msg: "I don't know this hotel :(" });
     } 
+
+    // const uploadPhotos = async (req. res) => {
+    //   try {
+    //     if (req.file && req.file.path) {
+    //       const photos = new Photos ({
+    //         url: req.file.path,
+    //       });
+
+    //       await photos.save();
+    //       return res.status(200).json({msg: "saved Successfully"});
+    //     } eles {
+    //       return res.status(422).json({error})
+    //     }
+    //   } catch (error) {
+    //     return res.status(500).json({errpr})
+    //   }
+    // };
 
     // Update hotel fields
     hotel.name = name;
@@ -87,6 +110,24 @@ const updateHotel = async (req, res) => {
     res.status(500).json({
       error,
     });
+  }
+};
+const uploadPhotos = async (req, res, hotelId) => {
+  try {
+    if (req.file && req.file.path) {
+      const photos = new Photo ({
+        name: req.file.name,
+        url: req.file.path,
+        hotel: hotelId
+      });
+
+      await photos.save();
+      return res.status(200).json({msg: "saved Successfully"});
+    } else {
+      return res.status(422).json({error})
+    }
+  } catch (error) {
+    return res.status(500).json({error})
   }
 };
 
@@ -146,4 +187,4 @@ const getAllHotels = async (req, res) => {
   }
 };
 
-module.exports ={ createHotel, updateHotel, deleteOneHotel, getOneHotel, getAllHotels };
+module.exports ={ createHotel, updateHotel, deleteOneHotel, getOneHotel, getAllHotels, uploadPhotos };

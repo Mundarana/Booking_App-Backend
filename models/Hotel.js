@@ -6,16 +6,15 @@ const RoomSchema = new mongoose.Schema(
       type: String, // Rooms type
     },
     price: {
-      type: Number,
+      type: String,
       required: true,
     },
     maxPeople: {
-      type: Number,
+      type: String,
       required: true,
     },
     roomDesc: {
       type: String,
-      required: true,
     },
     // roomNumbers: [{ number: Number, unavailableDates: {type: [Date]}}], please delete. The number of available rooms and their availability dates should be in the hotel schema. (Add that at the end or even after the bootcamp, because it's not part of the MVP)
   },
@@ -24,7 +23,7 @@ const RoomSchema = new mongoose.Schema(
 
 const HotelSchema = new mongoose.Schema({
   name: {
-    type: String,  //name ot the Ohner
+    type: String,  //name ot the Hotel/Property
     required: true,
   },
   typeOfProperty: {
@@ -40,18 +39,19 @@ const HotelSchema = new mongoose.Schema({
     required: true,
   },
   telephone: {
-    type: Number,
+    type: String,
     require: true,
   },
   distanceFromCityCenter: {
     type: String,
     required: true,
   },
-  photos: {
-    type: [String],
-  },
+  photos: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Photo',
+  }],
   title: {
-    type: String, // name the Place
+    type: String, // name the Name and Title of the Ohner 
     required: true,
   },
   desc: {
@@ -59,13 +59,11 @@ const HotelSchema = new mongoose.Schema({
     required: true,
   },
   rating: {
-    type: Number,
-    min: 0,
-    max: 5,
+    type: String,
   },
   rooms: [RoomSchema],
   cheapestPrice: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
