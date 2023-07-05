@@ -4,10 +4,9 @@ const { trace } = require("../routes/hotel");
 
 // Create Hotel
 const createHotel = async (req, res) => {
-  console.log("req.body", req.body);
   try {
-    const user_id = req.user.user_id
-    console.log("USER ID", user_id)
+    const user_id = req.user._id;
+    console.log("USER ID", user_id);
     const {
 
       name,
@@ -49,6 +48,8 @@ const createHotel = async (req, res) => {
       cheapestPrice,
       featured,
     });
+
+    console.log("HOTEL", hotel);
 
     // Call the uploadPhotos controller here, passing the hotel ID
     // await uploadPhotos(req, res, hotel._id);
@@ -179,8 +180,19 @@ const uploadPhotos = async (req, res, hotelId) => {
 //Delete Hotel
 const deleteOneHotel = async (req, res) => {
   try {
+    const id_of_user = req.user._id;
     const { id } = req.params;
+    const hotelToDelete = await Hotel.findById(id);
+
+    if (hotelToDelete.user_id !== id_of_user) {
+      return res
+        .status(401)
+        .json({ msg: "You can only delete your own hotels" });
+    }
     const hotel = await Hotel.findByIdAndDelete(id);
+
+    console.log("ID of user: ", id_of_user);
+    console.log("ID OF USER FROM HOTEL ITSELF: ", hotel.user_id);
 
     if (!hotel) {
       res.status(404).json({ msg: "I don't know this hotel :(" });
