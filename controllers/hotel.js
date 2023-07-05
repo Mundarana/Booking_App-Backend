@@ -4,6 +4,7 @@ const { trace } = require("../routes/hotel");
 
 // Create Hotel
 const createHotel = async (req, res) => {
+  const user_id = req.user._id;
   try {
     console.log("USER ID", user_id);
     const {
@@ -20,8 +21,6 @@ const createHotel = async (req, res) => {
       cheapestPrice,
       featured,
     } = req.body;
-
-    const user_id = req.user._id;
 
     const rooms = req.body.rooms.map((room) => ({
       roomTitle: room.title,
