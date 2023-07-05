@@ -11,9 +11,11 @@ const {
 
 const api = express.Router();
 
+api.route("/").get(getAllHotels);
+
 api.use(requireAuth);
 
-api.route("/").post(createHotel).get(getAllHotels);
+api.route("/").post(createHotel);
 api.route("/:id").put(updateHotel).delete(deleteOneHotel).get(getOneHotel);
 
 module.exports = api;
