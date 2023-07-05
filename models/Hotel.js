@@ -22,7 +22,7 @@ const RoomSchema = new mongoose.Schema(
 );
 
 const HotelSchema = new mongoose.Schema({
-  user_id: {
+  user_id :{
     type: String,
   },
   name: {

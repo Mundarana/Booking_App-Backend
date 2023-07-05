@@ -8,6 +8,7 @@ const createHotel = async (req, res) => {
     const user_id = req.user._id;
     console.log("USER ID", user_id);
     const {
+
       name,
       typeOfProperty,
       city,
@@ -21,6 +22,8 @@ const createHotel = async (req, res) => {
       cheapestPrice,
       featured,
     } = req.body;
+
+    const user_id = req.user._id;
 
     const rooms = req.body.rooms.map((room) => ({
       roomTitle: room.title,
