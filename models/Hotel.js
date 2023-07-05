@@ -21,10 +21,12 @@ const RoomSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const HotelSchema = new mongoose.Schema({ 
-  
+const HotelSchema = new mongoose.Schema({
+  user_id: {
+    type: String,
+  },
   name: {
-    type: String,  //name ot the Hotel/Property
+    type: String, //name ot the Hotel/Property
     required: true,
   },
   typeOfProperty: {
@@ -47,12 +49,14 @@ const HotelSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  photos: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Photo',
-  }],
+  photos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Photo",
+    },
+  ],
   title: {
-    type: String, // name the Name and Title of the Ohner 
+    type: String, // name the Name and Title of the Ohner
     required: true,
   },
   desc: {
@@ -69,4 +73,4 @@ const HotelSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Hotel', HotelSchema);
+module.exports = mongoose.model("Hotel", HotelSchema);
