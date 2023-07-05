@@ -21,7 +21,8 @@ const RoomSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const HotelSchema = new mongoose.Schema({
+const HotelSchema = new mongoose.Schema({ 
+  
   name: {
     type: String,  //name ot the Hotel/Property
     required: true,
