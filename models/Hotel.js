@@ -22,6 +22,9 @@ const RoomSchema = new mongoose.Schema(
 );
 
 const HotelSchema = new mongoose.Schema({
+  user_id :{
+    type: String,
+  },
   name: {
     type: String,  //name ot the Hotel/Property
     required: true,

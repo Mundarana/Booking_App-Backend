@@ -7,6 +7,7 @@ const createHotel = async (req, res) => {
   console.log("req.body", req.body);
   try {
     const {
+
       name,
       typeOfProperty,
       city,
@@ -21,6 +22,8 @@ const createHotel = async (req, res) => {
       featured,
     } = req.body;
 
+    const user_id = req.user._id;
+
     const rooms = req.body.rooms.map((room) => ({
       roomTitle: room.title,
       price: room.price,
@@ -29,6 +32,7 @@ const createHotel = async (req, res) => {
     }));
 
     const hotel = await Hotel.create({
+      user_id,
       name,
       typeOfProperty,
       city,
