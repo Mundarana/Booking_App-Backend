@@ -6,6 +6,8 @@ const { trace } = require("../routes/hotel");
 const createHotel = async (req, res) => {
   console.log("req.body", req.body);
   try {
+    const user_id = req.user.user_id
+    console.log("USER ID", user_id)
     const {
 
       name,

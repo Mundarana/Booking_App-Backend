@@ -21,6 +21,7 @@ const RoomSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+
 const HotelSchema = new mongoose.Schema({
   user_id :{
     type: String,
